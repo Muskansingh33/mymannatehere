@@ -1,0 +1,20 @@
+from scipy.misc import derivative
+import math
+
+class TaylorSeries():
+    def __init__(self, function, order, center=0):
+        self.center = center
+        self.f = function 
+        self.order = order
+        self.d_pts = order*2
+        self.coefficients = []
+
+        # number of points (order) for scipy.misc.derivative
+        if self.d_pts % 2 == 0: # must be odd and greater than derivative order
+            self.d_pts += 1
+
+        self.__find_coefficients()
+
+    def __find_coefficients(self):
+        for i in range(0, self.order+1):
+            self.coefficients.append(round(derivative(self.f, self.center, n=i, order=self.d_pts)/math.factorial(i), 5))
